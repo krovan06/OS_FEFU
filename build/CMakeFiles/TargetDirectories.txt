@@ -1,0 +1,5 @@
+/home/user/lab2_process/build/CMakeFiles/rebuild_cache.dir
+/home/user/lab2_process/build/CMakeFiles/edit_cache.dir
+/home/user/lab2_process/build/CMakeFiles/child.dir
+/home/user/lab2_process/build/CMakeFiles/process_test.dir
+/home/user/lab2_process/build/CMakeFiles/process.dir

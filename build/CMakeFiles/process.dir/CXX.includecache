@@ -1,0 +1,34 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/user/lab2_process/process.cpp
+process.h
+/home/user/lab2_process/process.h
+cstddef
+-
+cstdlib
+-
+unistd.h
+-
+sys/wait.h
+-
+sys/prctl.h
+-
+csignal
+-
+cerrno
+-
+
+/home/user/lab2_process/process.h
+cstddef
+-
+windows.h
+-
+sys/types.h
+-
+

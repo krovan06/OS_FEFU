@@ -1,0 +1,26 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/user/lab2_process/main.cpp
+iostream
+-
+process.h
+/home/user/lab2_process/process.h
+csignal
+-
+cstdlib
+-
+
+/home/user/lab2_process/process.h
+cstddef
+-
+windows.h
+-
+sys/types.h
+-
+
