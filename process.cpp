@@ -15,7 +15,7 @@ bool start_program(const char* path, Process& process, const ProcessArgs* args, 
     char* cmd_line = NULL;
     // Используем >= 0, чтобы корректно работать даже если аргументов нет
     if (args != NULL && args->argv != NULL && args->count >= 0) {
-        size_t total_len = strlen(path) + 1; // место для path + пробел или '\0'
+        size_t total_len = strlen(path) + 1;
         for (int i = 0; i < args->count; ++i) {
             if (args->argv[i] != NULL) {
                 total_len += strlen(args->argv[i]) + 1;
@@ -25,7 +25,7 @@ bool start_program(const char* path, Process& process, const ProcessArgs* args, 
         cmd_line = new char[total_len + 1];
         size_t pos = 0;
         
-        // Вдля Windows первым аргументом в командной строке 
+        // для Windows первым аргументом в командной строке 
         // должно быть имя исполняемого файла (становится argv[0] в child)
         strcpy(cmd_line + pos, path);
         pos += strlen(path);
@@ -85,18 +85,16 @@ bool start_program(const char* path, Process& process, const ProcessArgs* args, 
     if (pid < 0) return false; // Ошибка fork
 
     if (pid == 0) {
-        // --- МЫ В ДОЧЕРНЕМ ПРОЦЕССЕ ---
+        // дочерний процесс
         
-        // РЕШЕНИЕ ЗАМЕЧАНИЯ ПРЕПОДАВАТЕЛЯ: поведение при смерти родителя
         if (options != NULL && options->kill_on_parent_exit) {
             prctl(PR_SET_PDEATHSIG, SIGTERM);
-            // Дополнительная проверка: если родитель уже умер до вызова prctl
+            // если родитель уже умер до вызова prctl
             if (getppid() == 1) {
                 _exit(1);
             }
         }
-
-        // Формируем массив аргументов для execvp
+        
         char** child_argv = NULL;
         if (args != NULL && args->argv != NULL && args->count > 0) {
             child_argv = new char*[args->count + 2];
@@ -110,16 +108,15 @@ bool start_program(const char* path, Process& process, const ProcessArgs* args, 
             child_argv[0] = const_cast<char*>(path);
             child_argv[1] = NULL;
         }
-
-        // Заменяем образ процесса на новую программу
-        execvp(path, child_argv);
         
-        // Если execvp вернул управление, значит произошла ошибка
+        execvp(path, child_argv);
+
+        
         delete[] child_argv;
         _exit(127);
     }
 
-    // --- МЫ В РОДИТЕЛЬСКОМ ПРОЦЕССЕ ---
+    // родительский процесс
     process = pid;
     return true;
 }
