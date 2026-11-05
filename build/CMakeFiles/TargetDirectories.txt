@@ -1,5 +1,5 @@
-/home/user/lab2_process/build/CMakeFiles/rebuild_cache.dir
-/home/user/lab2_process/build/CMakeFiles/edit_cache.dir
-/home/user/lab2_process/build/CMakeFiles/child.dir
-/home/user/lab2_process/build/CMakeFiles/process_test.dir
-/home/user/lab2_process/build/CMakeFiles/process.dir
+D:/Studing/os_lab/lab2_process/OS_FEFU/build/CMakeFiles/process.dir
+D:/Studing/os_lab/lab2_process/OS_FEFU/build/CMakeFiles/process_test.dir
+D:/Studing/os_lab/lab2_process/OS_FEFU/build/CMakeFiles/child.dir
+D:/Studing/os_lab/lab2_process/OS_FEFU/build/CMakeFiles/edit_cache.dir
+D:/Studing/os_lab/lab2_process/OS_FEFU/build/CMakeFiles/rebuild_cache.dir

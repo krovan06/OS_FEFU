@@ -13,24 +13,32 @@ bool start_program(const char* path, Process& process, const ProcessArgs* args, 
 
     // Формируем командную строку из аргументов
     char* cmd_line = NULL;
-    if (args != NULL && args->argv != NULL && args->count > 0) {
-        size_t total_len = 0;
+    // Используем >= 0, чтобы корректно работать даже если аргументов нет
+    if (args != NULL && args->argv != NULL && args->count >= 0) {
+        size_t total_len = strlen(path) + 1; // место для path + пробел или '\0'
         for (int i = 0; i < args->count; ++i) {
-            if (args->argv[i] != NULL) total_len += strlen(args->argv[i]) + 1;
-        }
-        if (total_len > 0) {
-            cmd_line = new char[total_len + 1];
-            size_t pos = 0;
-            for (int i = 0; i < args->count; ++i) {
-                if (args->argv[i] != NULL) {
-                    size_t arg_len = strlen(args->argv[i]);
-                    if (pos > 0) cmd_line[pos++] = ' ';
-                    strcpy(cmd_line + pos, args->argv[i]);
-                    pos += arg_len;
-                }
+            if (args->argv[i] != NULL) {
+                total_len += strlen(args->argv[i]) + 1;
             }
-            cmd_line[pos] = '\0';
         }
+        
+        cmd_line = new char[total_len + 1];
+        size_t pos = 0;
+        
+        // Вдля Windows первым аргументом в командной строке 
+        // должно быть имя исполняемого файла (становится argv[0] в child)
+        strcpy(cmd_line + pos, path);
+        pos += strlen(path);
+        
+        for (int i = 0; i < args->count; ++i) {
+            if (args->argv[i] != NULL) {
+                cmd_line[pos++] = ' ';
+                size_t arg_len = strlen(args->argv[i]);
+                strcpy(cmd_line + pos, args->argv[i]);
+                pos += arg_len;
+            }
+        }
+        cmd_line[pos] = '\0';
     }
 
     BOOL result = CreateProcessA(path, cmd_line, NULL, NULL, FALSE, 0, NULL, NULL, &startup, &info);
